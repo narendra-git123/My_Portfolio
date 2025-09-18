@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}Portfolio{% endblock %}
+
+{% block content %}
+
+<!-- show flash messages -->
+<div class="container mt-3">
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert {% if msg.tags %}alert-{{ msg.tags }}{% else %}alert-info{% endif %}">{{ msg }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<!-- HOME -->
+<section id="home" class="section home-section">
+  <div class="container-fluid p-0">
+    <div class="home-container d-flex">
+      <!-- left: photo 50% -->
+      <div class="home-left">
+        {% if home and home.photo %}
+          <img src="{{ home.photo.url }}" alt="{{ home.name }}" class="w-100 h-100 object-fit-cover">
+        {% endif %}
+      </div>
+
+      <!-- right: name, role, resume -->
+      <div class="home-right d-flex flex-column justify-content-center align-items-center text-center p-4">
+        {% if home %}
+          <h2 class="mb-4">{{ home.name }}</h2>
+          <p class="mb-4">{{ home.role }}</p>
+          {% if home.resume %}
+            <a href="{{ home.resume.url }}" class="btn btn-dark btn-lg d-flex align-items-center gap-2" download>
+              <i class="fas fa-download"></i><span>Download Resume</span>
+            </a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section about-section">
+  <div class="container">
+    {% if about %}
+      <h2 class="mb-3">{{ about.heading }}</h2>
+      <p>{{ about.content }}</p>
+      <h3 class="mt-4">{{ about.skills_heading }}</h3>
+      <ul class="list-unstyled">
+        {% for skill in skills %}
+          <li>• {{ skill.name }}</li>
+        {% empty %}
+          <li>No skills added yet.</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section projects-section">
+  <div class="container">
+    <h2 class="mb-4">My Projects</h2>
+    <div class="row">
+      {% for project in projects %}
+        <div class="col-md-4 mb-4">
+          <div class="card project-card h-100 d-flex flex-column">
+            <!-- Title first -->
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-center">{{ project.title }}</h5>
+
+              {% if project.image %}
+                <img src="{{ project.image.url }}" class="card-img-top mb-3" alt="{{ project.title }}">
+              {% endif %}
+
+              <!-- description as bullet list (each newline -> li) -->
+              <ul class="card-text flex-grow-1">
+                {% for point in project.description.splitlines %}
+                  {% if point.strip %}
+                    <li>{{ point }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+
+              <!-- link button pinned to bottom -->
+              <div class="mt-auto text-center pt-3">
+                {% if project.link %}
+                  <a href="{{ project.link }}" target="_blank" class="btn btn-secondary d-grid">View Project</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No projects added yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section contact-section">
+  <div class="container">
+    <h2 class="mb-3">{{ contact_info.heading }}</h2>
+
+    <!-- contact info (stacked) -->
+    <div class="mb-4 contact-info">
+      {% if contact_info %}
+        <div class="ci-item mb-2"><i class="fas fa-map-marker-alt me-2"></i>{{ contact_info.address }}</div>
+        <div class="ci-item mb-2"><i class="fas fa-phone me-2"></i>{{ contact_info.phone }}</div>
+        <div class="ci-item mb-2"><i class="fas fa-envelope me-2"></i>{{ contact_info.email }}</div>
+      {% endif %}
+    </div>
+    <br>
+    <!-- form heading -->
+    <p class="form-heading">Let's get in touch. Send me a message:</p>
+    <!-- contact form -->
+    <div class="contact-form">
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+        {{ form.name.errors }}
+        <input type="text" name="name" placeholder="Name" value="{{ form.name.value|default_if_none:'' }}" class="form-control mb-2" required>
+
+        {{ form.email.errors }}
+        <input type="email" name="email" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}" class="form-control mb-2" required>
+
+        {{ form.subject.errors }}
+        <input type="text" name="subject" placeholder="Subject" value="{{ form.subject.value|default_if_none:'' }}" class="form-control mb-2" required>
+
+        {{ form.message.errors }}
+        <textarea name="message" placeholder="Message" rows="6" class="form-control mb-3" required>{{ form.message.value|default_if_none:'' }}</textarea>
+
+        <button type="submit" class="btn btn-dark ">
+          <i class="fas fa-paper-plane"></i> <span>SEND MESSAGE</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

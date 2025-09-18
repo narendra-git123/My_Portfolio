@@ -1,0 +1,41 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+venv/
+.env/
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Django static & media
+/staticfiles/
+/media/
+
+# Database (if using SQLite locally)
+db.sqlite3
+
+# Environment / secret config
+*.env
+.env.*
+
+# Logs
+*.log
+
+# Collected static files (they can be re-generated)
+staticfiles/
+
+# Byte-compiled / temporary
+*.egg-info/
+.eggs/
+dist/
+build/
