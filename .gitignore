@@ -39,3 +39,6 @@ staticfiles/
 .eggs/
 dist/
 build/
+
+
+db.json
