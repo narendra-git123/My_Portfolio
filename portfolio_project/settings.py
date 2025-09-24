@@ -73,14 +73,15 @@ WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'narendra123pytho$narendra',  
-        'USER': 'narendra123pytho',           
-        'PASSWORD': 'cZAhBiU6GvZ7#g#',  
-        'HOST': 'narendra123pythonanywhere.mysql.pythonanywhere-services.com',
-        'PORT': '3306',                       
+        'ENGINE': 'django.db.backends.mysql',   # MySQL backend
+        'NAME': 'portfolio_db',           # Name of your MySQL database
+        'USER': 'root',          # MySQL username
+        'PASSWORD': 'Root@123',      # MySQL password
+        'HOST': 'localhost',                    # Usually 'localhost' for local MySQL or host URL for remote
+        'PORT': '3306',                         # Default MySQL port
     }
 }
 
